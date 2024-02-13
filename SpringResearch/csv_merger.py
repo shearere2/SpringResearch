@@ -1,7 +1,4 @@
 import pandas as pd
-def combined_csv(path_list: list):
-    pass
-
 if __name__ == "__main__":
     pitt = pd.read_csv('/Users/shearer/Desktop/SpringResearch/data/City_of_Pittsburgh_Neighborhoods/City_of_Pittsburgh_Neighborhoods.csv')   
     pitt = pitt.rename(columns = {'HOOD':'Neighborhood'}).set_index('Neighborhood')
