@@ -1,5 +1,5 @@
 import pandas as pd
-def csv_merge(large: pd.DataFrame, paths: list):
+def csv_merge(large: pd.DataFrame, paths: list, new_name: str):
     """Sequentially merges a list of csv files using pd.merge
     and saves to working directory
 
@@ -10,7 +10,7 @@ def csv_merge(large: pd.DataFrame, paths: list):
     for path in paths:
         df = pd.read_csv(path)
         large = large.merge(df,on = 'Neighborhood', how = 'outer')
-        large.to_csv('data/test1.csv', index=False)
+        large.to_csv(f'data/{new_name}.csv', index=False)
 
 if __name__ == "__main__":
     pitt = pd.read_csv('data/City_of_Pittsburgh_Neighborhoods/City_of_Pittsburgh_Neighborhoods.csv')   
@@ -25,4 +25,4 @@ if __name__ == "__main__":
                 'data/Data/to_combine/public-safety.csv',
                 'data/Data/to_combine/transportation.csv']  
            
-    csv_merge(pitt,path_list)
+    csv_merge(pitt,path_list, 'pitt_neighborhoods_merged')
