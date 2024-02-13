@@ -25,4 +25,4 @@ if __name__ == "__main__":
                 'data/Data/to_combine/public-safety.csv',
                 'data/Data/to_combine/transportation.csv']  
            
-    csv_merge(path_list)
+    csv_merge(pitt,path_list)
