@@ -25,16 +25,16 @@ if __name__ == "__main__":
 #    geoplot.webmap(df,projection=gcrs.WebMercator(),figsize=(100,100)).figure.savefig('data/file2.png')
 
 
-    hoods = pd.read_csv('/Users/shearer/Desktop/SpringResearch/data/test1.csv')
-    geojson = gpd.read_file('/Users/shearer/Desktop/SpringResearch/data/test1.geojson')
+    hoods = pd.read_csv('data/pitt_neighborhoods_merged.csv')
+    geojson = gpd.read_file('data/City_of_Pittsburgh_Neighborhoods.geojson')
 
-    fig = px.choropleth_mapbox(hoods, geojson=geojson, color="OBJECTID",
+    fig = px.choropleth_mapbox(hoods, geojson=geojson, color="working_population",
                            locations="Neighborhood", featureidkey="properties.Neighborhood",
                            center={"lat": 40.440624, "lon": -79.995888},
                            mapbox_style="carto-positron", zoom=9)
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
-    stops = pd.read_csv('/Users/shearer/Desktop/SpringResearch/data/paac_stops_1909/PAAC_Stops_1909.csv')
+    # stops = pd.read_csv('/Users/shearer/Desktop/SpringResearch/data/paac_stops_1909/PAAC_Stops_1909.csv')
     # Try to add stops
 
     # fig.add_scattergeo(px.scatter_geo(stops))
