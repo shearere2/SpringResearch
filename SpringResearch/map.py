@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
 
     hoods = pd.read_csv('data/pitt_neighborhoods_merged.csv')
-    geojson = gpd.read_file('data/City_of_Pittsburgh_Neighborhoods.geojson')
+    geojson = gpd.read_file('data/pitt_neighborhoods_merged.geojson')
 
     fig = px.choropleth_mapbox(hoods, geojson=geojson, color="working_population",
                            locations="Neighborhood", featureidkey="properties.Neighborhood",
