@@ -53,10 +53,16 @@ def csv_merge(pitt:pd.DataFrame, walkability:pd.DataFrame):
                          980700, 980800, 980900, 981000, 981100, 981200, 981800,
                          982200]
     
-    return pitt_walkability.loc[pitt_walkability['tract_fips_code'] in pittsburgh_tracts]
+    pitt_walkability = pitt_walkability.loc[pitt_walkability['tract_fips_code'].isin(pittsburgh_tracts)]
+    pitt = pitt.rename(columns={'tractce10':'tract'})
+    pitt_walkability = pitt_walkability.rename(columns={'tract_fips_code':'tract'})
+    pitt_walkability = pitt_walkability.loc[pitt_walkability['block_group_fips_code'] == 1]
+    pitt = pitt_walkability.merge(pitt, on = 'tract')
+    return pitt
 
 
 if __name__ == "__main__":
     df1 = pd.read_csv('data/pitt_neighborhoods_merged.csv',low_memory=False)
     df2 = pd.read_csv('data/walkability.csv',low_memory=False)
-    csv_merge(df1,df2)
+    pittsburgh_walkability = csv_merge(df1,df2)
+    pittsburgh_walkability.to_csv(f'data/pittsburgh_walkability.csv', index=False)
