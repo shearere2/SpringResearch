@@ -5,13 +5,12 @@ class busStop:
         self._lat = lat
         self._lon = lon
         self._routes = routes
-    
-def stop(df:pd.DataFrame) -> pd.DataFrame:
-    df['stop'] = str(df['Latitude']) + str(df['Longitude']) + str(df['Routes_ser'])
-    return df
 
 
 if __name__ == "__main__":
     df = pd.read_csv('data/PAAC_Stops_1909.csv')
-    df = stop(df)
+    df['stop'] = busStop(float(df['Latitude']),float(df['Longitude']),list(df['Routes_ser']))
+    #df.to_csv('data/stop_test.csv')
+    x = df['stop'][2]._lat
     
+    print(x)
