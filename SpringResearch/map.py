@@ -40,3 +40,4 @@ if __name__ == "__main__":
     # fig.add_scattergeo(px.scatter_geo(stops))
     # fig.show()
 
+    pass
