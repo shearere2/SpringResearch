@@ -13,7 +13,8 @@ import plotly.express as px
 
 if __name__ == "__main__":
 #     #print(df.crs) # Gives Coordinate Reference System
-    # df = gpd.read_file('data/pittsburgh_outline.shp')
+    df = gpd.read_file('data/pittsburgh_outline.shp')
+    print(df)
     # stops = gpd.read_file('data/paac_stops_1909')
 
     # burgh = geoplot.polyplot(df,projection=gcrs.AlbersEqualArea(),figsize = (60,45))
@@ -39,5 +40,3 @@ if __name__ == "__main__":
 
     # fig.add_scattergeo(px.scatter_geo(stops))
     # fig.show()
-
-    pass
