@@ -56,18 +56,25 @@ class busNetwork:
 
 
         for shape in hoods.geometry:
+            count = 0
             for stop in geo_df.geometry:
                 if stop.within(shape):
-                    network[network.find(stop)].set_neighborhood(shape['HOOD'])
-# Runs O(nlogn) I think, which takes forever. Needs improved
+                    network[count].set_neighborhood(shape['HOOD'])
+                count += 1
+
         return network
     
 
 if __name__ == "__main__":
     pitt = busNetwork.create_network()
     
-    stops = pitt._stops
-    for stop in stops:
-        print(stop.get_neighborhood())
+    stops = pitt.get_stops()
+    print(stops[0].get_neighborhood()) # WHY is this giving blank line
+    # In other words, why isn't the neighborhood being set to the
+    # stop in line 62?
+
+
+# Will then use neighborhoods dataframe to give each row (neighborhood)
+# a list of busStops
 
 
