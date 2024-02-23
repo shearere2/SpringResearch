@@ -10,6 +10,8 @@ python = "^3.12"
 pandas = "^2.2.0"
 geopandas = "^0.14.3"
 shapely = "^2.0.3"
+geoplot = "^0.5.1"
+plotly-express = "^0.4.1"
 
 
 [build-system]
