@@ -1,4 +1,11 @@
 import pandas as pd
+
+# NOTE: This function has been used to its complete planned ability,
+# and should not be modified.
+
+"""This file was used to merge all the census data with the csv of
+neighborhoods (the one that is linked to the shapefile of neighborhood
+outlines.)""" 
 def csv_merge(large: pd.DataFrame, paths: list, new_name: str):
     """Sequentially merges a list of csv files using pd.merge
     and saves to working directory

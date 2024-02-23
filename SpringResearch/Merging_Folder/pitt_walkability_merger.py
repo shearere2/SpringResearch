@@ -1,4 +1,7 @@
 import pandas as pd
+"""This file is used to merge the data outputted from csv_merger.py
+with the walkability dataframe.  This could become useful if we decide
+to look at walkability near bus stops."""
 def csv_merge(pitt:pd.DataFrame, walkability:pd.DataFrame):
     pitt_walkability = walkability.loc[walkability['stat_area_name'].str.contains('Pittsburgh') == True].copy()
     pittsburgh_tracts = [10300, 20100, 20300, 30500, 40200, 40400, 40500, 40600,
