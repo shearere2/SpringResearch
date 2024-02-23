@@ -57,13 +57,19 @@ class busNetwork:
 
         for i in range(len(hoods)):
             for j in range(len(geo_df)):
-                if type(hoods.loc[i]['geometry']) is a multipolygon:
-                    if multipolygon contains point:
-                        network._stops[j].set_neighborhood(hoods.loc[i]['HOOD'])
-                    print(type(hoods.loc[i]['geometry']))
-                    print()
-                if (shapely.Polygon(hoods.loc[i]['geometry']).contains(shapely.Point(geo_df.loc[j].geometry))):
-                    network._stops[j].set_neighborhood(hoods.loc[i]['HOOD']) # THIS LINE WORKS CORRECTLY DO NOT MODIFY
+                # if type(hoods.loc[i]['geometry'].geom_type == "MultiPolygon"):
+
+                #     print()
+
+                #     polys = list(shapely.Polygon(hoods.loc[i]['geometry']).geoms)
+                #     for q in range(len(polys)):
+
+                #         if (shapely.Polygon(polys[q]).contains(shapely.Point(geo_df.loc[j].geometry))):
+                #             network._stops[j].set_neighborhood(hoods.loc[i]['HOOD'])
+                #     print(type(hoods.loc[i]['geometry']))
+                if shapely.Polygon(hoods.loc[i]['geometry']).contains(shapely.Point(geo_df.loc[j].geometry)):
+                    network._stops[j].set_neighborhood(hoods.loc[i]['HOOD'])
+                    print('q') # THIS LINE WORKS CORRECTLY DO NOT MODIFY
 
         return network
     
