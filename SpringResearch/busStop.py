@@ -5,7 +5,7 @@ class busStop:
         self._lat = lat
         self._lon = lon
         self._routes_served = routes
-        self._neighbors = []
+        # self._neighbors = []
         self._neighborhood = ""
         self._description = ""
 

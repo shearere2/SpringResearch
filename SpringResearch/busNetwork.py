@@ -55,12 +55,15 @@ class busNetwork:
 
 
 
-        for shape in hoods.geometry:
-            count = 0
-            for stop in geo_df.geometry:
-                if stop.within(shape):
-                    network[count].set_neighborhood(shape['HOOD'])
-                count += 1
+        for i in range(len(hoods)):
+            for j in range(len(geo_df)):
+                if type(hoods.loc[i]['geometry']) is a multipolygon:
+                    if multipolygon contains point:
+                        network._stops[j].set_neighborhood(hoods.loc[i]['HOOD'])
+                    print(type(hoods.loc[i]['geometry']))
+                    print()
+                if (shapely.Polygon(hoods.loc[i]['geometry']).contains(shapely.Point(geo_df.loc[j].geometry))):
+                    network._stops[j].set_neighborhood(hoods.loc[i]['HOOD']) # THIS LINE WORKS CORRECTLY DO NOT MODIFY
 
         return network
     
@@ -69,6 +72,9 @@ if __name__ == "__main__":
     pitt = busNetwork.create_network()
     
     stops = pitt.get_stops()
+
+    print()
+
     print(stops[0].get_neighborhood()) # WHY is this giving blank line
     # In other words, why isn't the neighborhood being set to the
     # stop in line 62?
