@@ -69,3 +69,9 @@ if __name__ == "__main__":
     df2 = pd.read_csv('data/walkability.csv',low_memory=False)
     pittsburgh_walkability = csv_merge(df1,df2)
     pittsburgh_walkability.to_csv(f'data/pittsburgh_walkability.csv', index=False)
+
+
+
+
+# CURRENT OBJECTIVE, WORK ON THIS FILE AND THEN USE IT IN WALK BUSTTOPS MERGER
+# BUT ALSO CAN WORK ON OBJECTIVE LISTED IN NETWORKS FILE
