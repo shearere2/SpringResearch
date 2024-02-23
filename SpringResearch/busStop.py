@@ -11,7 +11,7 @@ class busStop:
 
     """Accessor Methods"""
     def get_coords(self) -> tuple:
-        return (self._lat,self._lon)
+        return (self._lon,self._lat)
     def get_routes(self) -> list:
         return self._routes_served
     def get_neighborhood(self) -> str:
