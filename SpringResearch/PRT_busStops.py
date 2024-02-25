@@ -97,12 +97,16 @@ def create_city_network() -> object:
         return network
 
 
-if __name__ == "__main__":
+def create() -> pd.DataFrame:
 
     pitt_no_multipolys = create_city_network()
     stops = pitt_no_multipolys.get_stops()
     new_df = PRT_busStops(pd.read_csv('data/Outputs/pitt_neighborhoods_merged.csv'),
                           stops) # Perfectly gets me the df with the bus stops
+    return new_df
+
+
+if __name__ == "__main__":
+    df = create()
     print()
 
-    new_df.to_csv('data/Outputs/prt_stops_data.csv',index=False)

@@ -7,11 +7,19 @@ import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
 import plotly.express as px
+from SpringResearch.Bus_Folder import busNetwork, busStop
+import shapely
+
+"""This file is where I test map functions.
+Most real, used maps will come from within different files."""
 
 if __name__ == "__main__":
+
+
+
     # print(df.crs) # Gives Coordinate Reference System
     df = gpd.read_file('data/pittsburgh_outline.shp')
-    print(df)
+    print()
     # stops = gpd.read_file('data/paac_stops_1909')
 
     # burgh = geoplot.polyplot(df,projection=gcrs.AlbersEqualArea(),figsize = (60,45))
