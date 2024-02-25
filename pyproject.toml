@@ -12,6 +12,7 @@ geopandas = "^0.14.3"
 shapely = "^2.0.3"
 geoplot = "^0.5.1"
 plotly-express = "^0.4.1"
+pyarrow = "^15.0.0"
 
 
 [build-system]

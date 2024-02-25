@@ -16,6 +16,7 @@ class busStop:
         # self._neighbors = [] # To be added later on
         self._neighborhood = ""
         self._description = descr
+        self._active_bool = not routes == []
 
     """Accessor Methods"""
     def get_coords(self) -> tuple:
@@ -57,6 +58,12 @@ class busStop:
             str: Description of the bus stop
         """        
         return self._description
+    
+    def is_active(self) -> bool:
+        """Returns a boolean flagging whether or
+        not a stop is currently active (currently
+        serves at least 1 route)."""
+        return self._active_bool
 
     """Mutator Methods"""
     # def add_neighbor(self, neighbor:str):
