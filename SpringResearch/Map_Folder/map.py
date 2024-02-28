@@ -6,7 +6,7 @@ import geopandas as gpd
 import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
-import plotly.express as px
+
 from SpringResearch.Bus_Folder import busNetwork, busStop
 import shapely
 

@@ -2,6 +2,7 @@ import pandas as pd
 import shapely
 import geopandas as gpd
 from SpringResearch.Bus_Folder import busNetwork, busStop
+import plotly.express as px
 
 def PRT_busStops(pitt:pd.DataFrame,stops:list) -> pd.DataFrame:
     """Adds a list of stops to each neighborhood (row)
@@ -107,6 +108,17 @@ def create() -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    df = create()
+    hoods = create()
+
     print()
+    hoods['num_stops'] = len(hoods['bus_stops'])
+    geojson = gpd.read_file('data/pittsburgh_outline.shp/City_of_Pittsburgh_Neighborhoods.geojson')
+
+    fig = px.choropleth_mapbox(hoods, geojson=geojson, color='num_stops',
+                           locations="Neighborhood", featureidkey="properties.HOOD",
+                           center={"lat": 40.440624, "lon": -79.995888},
+                           mapbox_style="carto-positron", zoom=9)
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+
+    fig.show()
 
