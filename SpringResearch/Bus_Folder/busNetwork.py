@@ -35,17 +35,5 @@ class busNetwork:
         return self._stops
     
 
-if __name__ == "__main__":
-    pitt_no_multipolys = busNetwork.create_city_network()
-    
-    stops = pitt_no_multipolys.get_stops() # Stops within the network.
-
-    print() # Testing point
-
-
-
-# WHAT IS NEXT ON MY PLAN:
-"""Will then use neighborhoods dataframe to give each row (neighborhood)
-a list of busStops"""
 
 

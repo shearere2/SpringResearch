@@ -52,6 +52,8 @@ def create_city_network() -> object:
                                               row['Routes_ser'],
                                               row['Stop_name']), axis=1)
         stops = df['stop'] # Make a series of stops from the bus stops in df
+        # At this point, stops is a list of stop objects
+        # Need to convert this into neighborhood respective dataframes
         for stop in stops: network.add_stop(stop) # Add each stop to the network
 
         hoods = gpd.read_file('data/pittsburgh_outline.shp') # Geopandas df of neighborhoods shapes
