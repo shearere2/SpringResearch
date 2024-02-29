@@ -3,6 +3,7 @@ import shapely
 import geopandas as gpd
 from SpringResearch.Bus_Folder import busNetwork, busStop
 import plotly.express as px
+import geoplot
 
 def PRT_busStops(pitt:pd.DataFrame,stops:list) -> pd.DataFrame:
     """Adds a list of stops to each neighborhood (row)
@@ -25,7 +26,7 @@ def PRT_busStops(pitt:pd.DataFrame,stops:list) -> pd.DataFrame:
         overall_list.append(temp)
     
     pitt['bus_stops'] = overall_list
-    pitt['num_stops'] = pitt.apply(lambda row: len(row['bus_stops']),axis=1)
+    pitt['num_stops'] = pitt['bus_stops'].apply(lambda stops: len(stops))
 
 
     return pitt
@@ -104,14 +105,15 @@ def create() -> pd.DataFrame:
     stops = pitt_no_multipolys.get_stops()
     new_df = PRT_busStops(pd.read_csv('data/Outputs/pitt_neighborhoods_merged.csv'),
                           stops) # Perfectly gets me the df with the bus stops
-    return new_df
+    return [new_df,stops]
 
 
-if __name__ == "__main__":
-    hoods = create()
+def map_stops():
+    [hoods,stops] = create()
+    df = gpd.read_file('data/pittsburgh_outline.shp')
+    axis = geoplot.polyplot(df,projection=geoplot.crs.AlbersEqualArea(),figsize = (60,45))
 
     print()
-    hoods['num_stops'] = len(hoods['bus_stops'])
     geojson = gpd.read_file('data/pittsburgh_outline.shp/City_of_Pittsburgh_Neighborhoods.geojson')
 
     fig = px.choropleth_mapbox(hoods, geojson=geojson, color='num_stops',
@@ -120,5 +122,12 @@ if __name__ == "__main__":
                            mapbox_style="carto-positron", zoom=9)
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
+
+    bus_stops = px.scatter_geo(hoods, ) #stops.lat,stops.lon,)
+    fig.add_trace(bus_stops)
     fig.show()
+
+
+if __name__ == "__main__":
+    hoods = create()
 
