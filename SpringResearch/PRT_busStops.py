@@ -125,7 +125,7 @@ def map_stops():
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
 
-    bus_stops = px.scatter_geo(hoods, ) #stops.lat,stops.lon,)
+    bus_stops = px.scatter_geo(hoods,hoods['bus_stops'].get_stops().get_coords()) #stops.lat,stops.lon,)
     fig.add_trace(bus_stops)
     fig.show()
 

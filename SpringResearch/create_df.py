@@ -9,6 +9,7 @@ import pandas as pd
 
 def create_df():
 
-    df = pd.DataFrame()
+    df = pd.read_csv('data/paac_stops_1909/PAAC_Stops_1909.csv')
+    # Get to the point where we had rid of none used stops
     
     
