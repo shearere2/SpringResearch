@@ -25,3 +25,7 @@ def elevation_finder(lat:float, long:float) -> float:
 # STUCK ON THIS ABOVE STEP, MIGHT HAVE HAD ERRORS IN FIRST STEP THAT CAUSE THIS
 
 # Ran the above to build my opentopo
+        
+
+if __name__ == "__main__":
+    print(elevation_finder(0,0))
