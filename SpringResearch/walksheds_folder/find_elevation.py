@@ -18,8 +18,8 @@ def elevation_difference(start:tuple,end:tuple) -> float:
     return end_elev - start_elev # Represents meters that must be walked
 #                                  uphill to get from point 1 to point 2
 
-
-
+# FIRST TASK work out cumulative uphill travel between 2 points.
+# MAYBE WORK TOWARDS WEBSITE WITH 2 FIELDS AND BUTTON FOR 
 
 if __name__ == "__main__":
     change = elevation_difference((40,-79.8),(40.01,-79.9))
