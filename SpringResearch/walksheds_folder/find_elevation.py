@@ -87,10 +87,27 @@ def summarize_journey(start:tuple,end:tuple) -> dict:
     return {"Cumulative Uphill Travel":uphill,"Cumulative Downhill Travel":downhill,
             "Total Distance":dist,"Total Altitude Change":alt}
 
-def linked_summary():
-    """Summarize a journey that isn't a straight line
+def linked_summary(coords_list:list) -> dict:
+    """Provide elevational summary of a journey that takes turns
+
+    Args:
+        coords_list (list): List of tuples (coordinates), each
+        representing a point along the journey
+
+    Returns:
+        dict: Dictionary containing the following information:
+        Cumulative uphill travel, cumulative downhill travel,
+        total distance, total altitude change
     """
-    return
+    dist = float(distance(lonlat(*coords_list[0]), lonlat(*coords_list[-1])).meters)
+    alt = elevation_difference(coords_list[0],coords_list[-1])
+    uphill = 0;downhill = 0
+    for i in range(len(coords_list)-1):
+        temp_dict = summarize_journey(coords_list[i],coords_list[i+1])
+        uphill = uphill + temp_dict['Cumulative Uphill Travel']
+        downhill = downhill + temp_dict['Cumulative Downhill Travel']
+    return {"Cumulative Uphill Travel":uphill,"Cumulative Downhill Travel":downhill,
+            "Total Distance":dist,"Total Altitude Change":alt}
 
 if __name__ == "__main__":
     #change = elevation_difference((40,-79.8),(40.01,-79.9))
