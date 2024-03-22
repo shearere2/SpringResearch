@@ -2,6 +2,7 @@ import requests
 import json
 from geopy.distance import distance,lonlat
 import numpy as np
+import time
 
 unit = 0.00027777777777 / 3.0 # 10 meters represented in decimal degrees
 
@@ -15,10 +16,13 @@ def find_elevation(lat:float, long:float) -> float:
     Returns:
         float: Elevation in meters
     """
+    '{0:.4f}'.format(lat)
+    '{0:.4f}'.format(long)
     url = f'https://api.opentopodata.org/v1/ned10m?locations={lat},{long}'
     response = requests.get(url)
     string = response.content.decode()
     file = json.loads(string)
+    time.sleep(1)
     '''I can be so specific on this return becuase of how
     specific I know the json format will be.'''
     return file['results'][0]['elevation']
@@ -56,31 +60,32 @@ def summarize_journey(start:tuple,end:tuple) -> dict:
     lat_line = np.arange(start[0],end[0],increments,dtype=float) # Doesn't include end[0]
     lon_line = np.arange(start[1],end[1],increments,dtype=float) # ^^^^^
 
-    if len(lat_line) == 0: ratio = float(len(lon_line))
-    else: ratio = float(len(lon_line)) / float(len(lat_line))
-    print()
-    if ratio < 0:
-        i = lon_line[0]
-        j = lon_line[-1]
-        lon_line = []
-        print()
-        lon_line = np.arange(i,j,ratio*increments)
-    elif ratio > 0:
-        i = start[0]
-        j = end[0]
-        lat_line = []
-        lat_line = np.arange(i,j,(1.0/ratio)*increments) # Should flip the ratio, why doesn't it?
+    
+    if len(lat_line) > len(lon_line):
+        lon_line = np.array([])
+        for i in range(len(lat_line)):
+            lon_line = np.append(lon_line,(lat_line[i] - y_intercept) / hyp_slope)
 
-    # Current issue: Need latline and lonline to be same length. How?
-    print()
+    elif len(lat_line) < len(lon_line):
+        lat_line = np.array([])
+        for i in range(len(lon_line)):
+            lat_line = np.append(lat_line,(lon_line[i]*hyp_slope) + y_intercept)
 
+    lon_line = np.append(lon_line,end[1])
+    lat_line = np.append(lat_line,end[0])
 
+    steps = []
+    for i in range(len(lat_line)-1):
+        steps.append(elevation_difference((lat_line[i],lon_line[i]),
+                                          (lat_line[i+1],lon_line[i+1])))
+        
+    for dif in steps:
+        if dif>0: uphill = uphill + dif
+        elif dif<0: downhill = downhill + dif
+        
 
-
-
-
-    return {"Cumulative Uphill Travel":None,"Cumulative Downhill Travel":None,
-            "Total Distance":dist,"Total Altitude Change":None}
+    return {"Cumulative Uphill Travel":uphill,"Cumulative Downhill Travel":downhill,
+            "Total Distance":dist,"Total Altitude Change":alt}
 
 def linked_summary():
     """Summarize a journey that isn't a straight line
@@ -91,4 +96,5 @@ if __name__ == "__main__":
     #change = elevation_difference((40,-79.8),(40.01,-79.9))
     #print(f'To get from point one to point two, you will have to go up {change} meters')
 
-    summarize_journey((40.4473,-80.0002),(40.444,-79.9974))
+    journey = summarize_journey((40.4473,-80.0002),(40.4440,-79.9974))
+    print(journey)
