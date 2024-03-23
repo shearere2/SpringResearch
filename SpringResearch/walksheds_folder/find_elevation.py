@@ -113,5 +113,5 @@ if __name__ == "__main__":
     #change = elevation_difference((40,-79.8),(40.01,-79.9))
     #print(f'To get from point one to point two, you will have to go up {change} meters')
 
-    journey = summarize_journey((40.4473,-80.0002),(40.4440,-79.9974))
+    journey = summarize_journey((40.436884,-79.981472),(41.180285,-79.198072))
     print(journey)
