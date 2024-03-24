@@ -81,7 +81,7 @@ def summarize_journey(start:tuple,end:tuple) -> dict:
         
     for dif in steps:
         if dif>0: uphill = uphill + dif
-        elif dif<0: downhill = downhill + dif
+        elif dif<0: downhill = downhill - dif
         
 
     return {"Cumulative Uphill Travel":uphill,"Cumulative Downhill Travel":downhill,
@@ -113,5 +113,5 @@ if __name__ == "__main__":
     #change = elevation_difference((40,-79.8),(40.01,-79.9))
     #print(f'To get from point one to point two, you will have to go up {change} meters')
 
-    journey = summarize_journey((40.436884,-79.981472),(41.180285,-79.198072))
+    journey = summarize_journey((40.1125,-79.8899),(40.1223,-79.8193))
     print(journey)
