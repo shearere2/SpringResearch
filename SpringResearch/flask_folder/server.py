@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for, render_template
 from SpringResearch.walksheds_folder.find_elevation import summarize_journey
  
 # Flask constructor takes the name of 
@@ -9,9 +9,14 @@ app = Flask(__name__)
 # which tells the application which URL should call 
 # the associated function.
 @app.route('/')
-# ‘/’ URL is bound with hello_world() function.
-def elev_app():
-    return f"<p>{summarize_journey((40.1125,-79.8899),(40.1223,-79.8793))}</p>"
+def home():
+    render_template('index.html')
+
+# @app.route('/elevation/<tuple:start_stop>')
+# # ‘/elevation’ URL is bound with elev_app() function.
+# def elev_app(start_stop:tuple):
+#     return f"<p>{summarize_journey((start_stop[0][0],start_stop[0][1]),
+                                #    (start_stop[1][0],start_stop[1][1]))}</p>"
  
 # main driver function
 if __name__ == '__main__':
