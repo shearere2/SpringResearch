@@ -16,6 +16,7 @@ pyarrow = "^15.0.0"
 django = "^5.0.3"
 geocoder = "^1.38.1"
 flask = "^3.0.2"
+sqlalchemy = "^2.0.29"
 
 
 [build-system]
