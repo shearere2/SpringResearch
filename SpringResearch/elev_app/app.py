@@ -1,9 +1,10 @@
 from flask import Flask, render_template, url_for, request
+from flask_googlemaps import Map
 import re
 from datetime import datetime
 
 from elev_tools import summarize_journey
-from walksheds_folder import bus_routes
+from SpringResearch.walksheds_folder import bus_routes
 
 app = Flask(__name__)
 
@@ -65,10 +66,47 @@ def my_form_post():
         coords = coords
     )
 
+
 @app.route('/prt')
-def prt(route:str):
+def prt_form():
+    return render_template('prt_form.html')
+
+@app.route('/prt',methods=['POST'])
+def prt():
+    route = request.form['route']
     df = bus_routes.bus_route(route)
-    
+    return str(df['Latitude'][0]) + "," + str(df['Longitude'][0])
+
+@app.route('/test')
+def mapview():
+    # creating a map in the view
+    mymap = Map(
+        identifier="view-side",
+        lat=37.4419,
+        lng=-122.1419,
+        markers=[(37.4419, -122.1419)]
+    )
+    sndmap = Map(
+        identifier="sndmap",
+        lat=37.4419,
+        lng=-122.1419,
+        markers=[
+          {
+             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+             'lat': 37.4419,
+             'lng': -122.1419,
+             'infobox': "<b>Hello World</b>"
+          },
+          {
+             'icon': 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+             'lat': 37.4300,
+             'lng': -122.1400,
+             'infobox': "<b>Hello World from other place</b>"
+          }
+        ]
+    )
+    return render_template('example.html', mymap=mymap, sndmap=sndmap)
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

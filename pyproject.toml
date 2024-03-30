@@ -17,6 +17,8 @@ django = "^5.0.3"
 geocoder = "^1.38.1"
 flask = "^3.0.2"
 sqlalchemy = "^2.0.29"
+flask-googlemaps = "^0.4.1"
+markup = "^0.2"
 
 
 [build-system]
