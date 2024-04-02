@@ -1,7 +1,12 @@
-from flask import Flask, render_template, url_for, request
-from flask_googlemaps import Map
-import re
+from flask import Flask, render_template, url_for, request, Response
+import geoplot.crs as gcrs
 from datetime import datetime
+import geopandas as gpd
+import geoplot
+import io
+import random
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 from elev_tools import summarize_journey
 from SpringResearch.walksheds_folder import bus_routes
@@ -78,34 +83,19 @@ def prt():
     return str(df['Latitude'][0]) + "," + str(df['Longitude'][0])
 
 @app.route('/test')
-def mapview():
-    # creating a map in the view
-    mymap = Map(
-        identifier="view-side",
-        lat=37.4419,
-        lng=-122.1419,
-        markers=[(37.4419, -122.1419)]
-    )
-    sndmap = Map(
-        identifier="sndmap",
-        lat=37.4419,
-        lng=-122.1419,
-        markers=[
-          {
-             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-             'lat': 37.4419,
-             'lng': -122.1419,
-             'infobox': "<b>Hello World</b>"
-          },
-          {
-             'icon': 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-             'lat': 37.4300,
-             'lng': -122.1400,
-             'infobox': "<b>Hello World from other place</b>"
-          }
-        ]
-    )
-    return render_template('example.html', mymap=mymap, sndmap=sndmap)
+def plot_png():
+    fig = create_figure()
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+def create_figure():
+    df = gpd.read_file('data/pittsburgh_outline.shp')
+    stops = bus_routes.bus_route(14)
+    burgh = geoplot.polyplot(df,projection=gcrs.AlbersEqualArea(),figsize = (60,45))
+    burgh_stops = geoplot.pointplot(stops['Latitude','Longitude'], ax=burgh).figure
+    return burgh_stops
+
 
 
 if __name__ == "__main__":
