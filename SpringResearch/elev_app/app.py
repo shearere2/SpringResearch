@@ -89,14 +89,15 @@ def plot_png():
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')
 
-def create_figure():
+def create_figure(route):
     df = gpd.read_file('data/pittsburgh_outline.shp')
-    stops = bus_routes.bus_route(14)
+    stops = gpd.read_file('data/paac_stops_1909')
+    subset = bus_routes.bus_route(route)
+    print()
     burgh = geoplot.polyplot(df,projection=gcrs.AlbersEqualArea(),figsize = (60,45))
-    burgh_stops = geoplot.pointplot(stops['Latitude','Longitude'], ax=burgh).figure
-    return burgh_stops
-
+    burgh_stops = geoplot.pointplot(stops, ax=burgh).figure
+    burgh_stops.savefig('data/file1.png')
 
 
 if __name__ == "__main__":
-    app.run()
+    create_figure(14)

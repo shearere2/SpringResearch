@@ -22,7 +22,6 @@ def find_elevation(lat:float, long:float) -> float:
     response = requests.get(url)
     string = response.content.decode()
     file = json.loads(string)
-    time.sleep(1)
     '''I can be so specific on this return becuase of how
     specific I know the json format will be.'''
     return file['results'][0]['elevation']
