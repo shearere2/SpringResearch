@@ -100,4 +100,4 @@ def create_figure(route):
 
 
 if __name__ == "__main__":
-    create_figure(14)
+    app.run()

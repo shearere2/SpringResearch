@@ -6,7 +6,7 @@ import geopandas as gpd
 import numpy as np
 import seaborn as sns
 from matplotlib import pyplot as plt
-
+import plotly_express as px
 from SpringResearch.Bus_Folder import busNetwork, busStop
 import shapely
 
@@ -15,11 +15,20 @@ Most real, used maps will come from within different files."""
 
 if __name__ == "__main__":
 
+    hoods = pd.read_csv('data/pitt_neighborhoods_merged.csv')
+    hoods['num_stops'] = len(hoods['bus_stops'])
+    geojson = gpd.read_file('data/City_of_Pittsburgh_Neighborhoods.geojson')
 
+    fig = px.choropleth_mapbox(hoods, geojson=geojson, color='num_stops',
+                           locations="Neighborhood", featureidkey="properties.HOOD",
+                           center={"lat": 40.440624, "lon": -79.995888},
+                           mapbox_style="carto-positron", zoom=9)
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.show()
 
     # print(df.crs) # Gives Coordinate Reference System
-    df = gpd.read_file('data/pittsburgh_outline.shp')
-    print()
+    # df = gpd.read_file('data/pittsburgh_outline.shp')
+    # print()
     # stops = gpd.read_file('data/paac_stops_1909')
 
     # burgh = geoplot.polyplot(df,projection=gcrs.AlbersEqualArea(),figsize = (60,45))
