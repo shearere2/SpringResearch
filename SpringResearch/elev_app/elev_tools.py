@@ -3,6 +3,7 @@ import json
 from geopy.distance import distance,lonlat
 import numpy as np
 import time
+from ast import literal_eval
 
 unit = 0.00027777777777 / 3.0 # 10 meters represented in decimal degrees
 
@@ -56,8 +57,9 @@ def summarize_journey(start:tuple,end:tuple) -> dict:
     """
     if start == None or end == None:
         return {"Cumulative Uphill Travel":0,"Cumulative Downhill Travel":0,
-            "Total Distance":0,"Total Altitude Change":0}
+            "Total Distance":0,"Total Altitude Change":0,"Largest Jump":0}
     start = (float(start[0]),float(start[1]))
+    if isinstance(end,str): end = literal_eval(end)
     end = (float(end[0]),float(end[1]))
     dist = float(distance(lonlat(*start), lonlat(*end)).meters)
     alt = float(elevation_difference(start,end))
@@ -87,13 +89,18 @@ def summarize_journey(start:tuple,end:tuple) -> dict:
         steps.append(elevation_difference((lat_line[i],lon_line[i]),
                                           (lat_line[i+1],lon_line[i+1])))
         
+    max_jump = 0;down = False
     for dif in steps:
-        if dif>0: uphill = uphill + dif
-        elif dif<0: downhill = downhill - dif
-        
+        if dif>0:
+            uphill = uphill + dif
+            if dif>max_jump: max_jump=dif;down=False
+        elif dif<0:
+            downhill = downhill - dif
+            if abs(dif)>max_jump: max_jump=abs(dif);down=True
 
     return {"Cumulative Uphill Travel":uphill,"Cumulative Downhill Travel":downhill,
-            "Total Distance":dist,"Total Altitude Change":alt}
+            "Total Distance":dist,"Total Altitude Change":alt,
+            "Largest Jump":f"{max_jump} {"Uphill" if down==False else "Downhill"}"}
 
 def linked_summary(coords_list:list) -> dict:
     """Provide elevational summary of a journey that takes turns
