@@ -23,17 +23,17 @@ if __name__ == "__main__":
     hoods = clean.starts_and_stops(hoods)
     geojson = gpd.read_file('data/City_of_Pittsburgh_Neighborhoods.geojson')
 
-    # hoods['pop2010'] = clean.remove_commas(hoods,'pop2010')
-    hoods['hilly_score'] = hoods.apply(clean.hilly_score,axis=1)
-    hoods.to_csv('data/Outputs/hilly.csv')
-    print()
+    hoods['Population (2010)'] = clean.remove_commas(hoods,'pop2010')
 
-    # fig = px.choropleth_mapbox(hoods, geojson=geojson, color='hilly_score',
-    #                        locations="Neighborhood", featureidkey="properties.HOOD",
-    #                        center={"lat": 40.440624, "lon": -79.995888},
-    #                        mapbox_style="carto-positron", zoom=9)
-    # fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-    # fig.show()
+    fig = px.choropleth_mapbox(hoods, geojson=geojson, color='Population (2010)',
+                           locations="Neighborhood", featureidkey="properties.HOOD",
+                           center={"lat": 40.440624, "lon": -79.995888},
+                           mapbox_style="carto-positron", zoom=11,
+                           color_continuous_scale='blues')
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.update_layout(title_text = 'Pittsburgh\'s Neighborhoods by Population',
+                      title_x=.5,title_y=.9)
+    fig.show()
 
     # print(df.crs) # Gives Coordinate Reference System
     # df = gpd.read_file('data/pittsburgh_outline.shp')
