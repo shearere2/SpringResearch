@@ -5,8 +5,6 @@ import numpy as np
 import time
 from ast import literal_eval
 
-unit = 0.00027777777777 / 3.0 # 10 meters represented in decimal degrees
-
 def find_elevation(lat:float, long:float) -> float:
     lat = float(lat)
     long = float(long)
@@ -50,7 +48,6 @@ def elevation_difference(start:tuple,end:tuple) -> float:
 
 def summarize_journey(start:tuple,end:tuple) -> dict:
     """Summarize a linear journey between two coordinates
-    (assumed that coordinates are linear from each other)
 
     Args:
         start (tuple): Starting coordinates
@@ -61,6 +58,7 @@ def summarize_journey(start:tuple,end:tuple) -> dict:
         Cumulative uphill travel, cumulative downhill travel,
         total distance, total altitude change
     """
+    unit = 0.00027777777777 / 3.0 # 10 meters represented decimal arcseconds
     if start == None or end == None:
         return {"Cumulative Uphill Travel":0,"Cumulative Downhill Travel":0,
             "Total Distance":0,"Total Altitude Change":0,"Largest Jump":0}
