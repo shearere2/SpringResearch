@@ -32,15 +32,21 @@ def find_elevation(lat:float, long:float) -> float:
 
 
 def elevation_difference(start:tuple,end:tuple) -> float:
+    """Calculate elevation difference between
+    two coordinates
+
+    Args:
+        start (tuple): Starting coordinates
+        end (tuple): Ending coordinates
+
+    Returns:
+        float: Elevation difference, in meters
+    """
     start_elev = find_elevation(start[0],start[1])
     end_elev = find_elevation(end[0],end[1])
 
     if start_elev == None or end_elev == None: return 0
-    return end_elev - start_elev # Represents meters that must be walked
-#                                  uphill to get from point 1 to point 2
-
-# FIRST TASK work out cumulative uphill travel between 2 points.
-# MAYBE WORK TOWARDS WEBSITE WITH 2 FIELDS AND BUTTON FOR 
+    return end_elev - start_elev
 
 def summarize_journey(start:tuple,end:tuple) -> dict:
     """Summarize a linear journey between two coordinates
